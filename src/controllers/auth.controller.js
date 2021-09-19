@@ -12,7 +12,12 @@ exports.signup = (req, res) => {
     // Save User to Database
     User.create({
         // username: req.body.username,
-        email: req.body.email,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        address: req.body.address,
+        mobno: req.body.mobno,
+        dob: req.body.dob,
+        emailID: req.body.emailID,
         password: bcrypt.hashSync(req.body.password, 8)
     })
         .then(user => {
@@ -44,7 +49,8 @@ exports.signin = (req, res) => {
     User.findOne({
         where: {
             //  username: req.body.username
-            email: req.body.email,
+            emailID: req.body.emailID,
+
         }
     })
         .then(user => {

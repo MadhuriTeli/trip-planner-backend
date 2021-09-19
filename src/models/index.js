@@ -37,17 +37,18 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 //     foreignKey: "userId",
 //     otherKey: "roleId"
 // });
-
-db.user.belongsToMany(db.user, {
-    //through: "user",
+//db.role.hasMany(db.user, { as: "user" });
+db.user.belongsTo(db.user, {
+    //  through: "user",
     foreignKey: "roleId",
+    // as: "role"
     // otherKey: "id"
 });
-db.vendor.belongsToMany(db.vendor, {
-    through: "vendor",
-    foreignKey: "roleId",
-    //otherKey: "v_id"
-});
+// db.vendor.belongsToMany(db.vendor, {
+//     through: "vendor",
+//     foreignKey: "roleId",
+//     //otherKey: "v_id"
+// });
 
 db.ROLES = ["user", "vendor"];
 
