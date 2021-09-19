@@ -4,7 +4,13 @@ const dbConn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'trip'
+    database: 'trip',
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
 });
 
 dbConn.connect(function (error) {

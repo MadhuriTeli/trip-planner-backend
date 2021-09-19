@@ -3,6 +3,6 @@ const router = express.Router();
 
 const tripController = require('../controller/trip.controller');
 
-//geta all trips
+//get all trips
 router.get('/', tripController);
 module.exports = router;

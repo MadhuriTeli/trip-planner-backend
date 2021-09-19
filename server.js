@@ -1,28 +1,47 @@
-var express = require('express');
-var path = require("path");
+const express = require('express');
+const path = require("path");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-var app = express();
+const app = express();
+//const db = require("./app/models");
+
+//db.sequelize.sync();
 
 //midleware
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
-//setup the server port
-const port = process.env.PORT || 5000;
+
+var corsOptions = {
+    origin: "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 //define root route
 app.get('/', (request, response) => {
     response.send("hello");
 })
 
-//import trip routes
-const tripRoutes = require('./src/routes/trip.route');
+// //import trip routes
+// const tripRoutes = require('./src/routes/trip.route');
 
-//create trip routes
-app.use('api/v1/trip', tripRoutes);
+// //create trip routes
+// app.use('api/v1/trip', tripRoutes);
 
 
-app.listen(port, () => {
-    console.log(`Server listing at port ${port}`);
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server listing at port ${PORT}`);
 });
