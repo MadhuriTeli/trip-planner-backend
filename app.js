@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const postsRoute = require('./routes/posts');
 const userRoute = require('./routes/user');
+const vendorRoute = require('./routes/vendor');
 const commentsRoute = require('./routes/comments');
 const imageRoute = require('./routes/images');
 
@@ -13,6 +14,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.use("/posts", postsRoute);
 app.use("/user", userRoute);
+app.use("/vendor", vendorRoute);
 app.use("/comments", commentsRoute);
 app.use("/images", imageRoute);
 
