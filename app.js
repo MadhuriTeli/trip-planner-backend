@@ -1,16 +1,16 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-
-const postsRoute = require('./routes/posts');
-const userRoute = require('./routes/user');
-const vendorRoute = require('./routes/vendor');
-const commentsRoute = require('./routes/comments');
-const imageRoute = require('./routes/images');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const postsRoute = require("./routes/posts");
+const userRoute = require("./routes/user");
+const vendorRoute = require("./routes/vendor");
+const commentsRoute = require("./routes/comments");
+const imageRoute = require("./routes/images");
 
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.json());
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/posts", postsRoute);
 app.use("/user", userRoute);
