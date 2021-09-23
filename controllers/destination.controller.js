@@ -11,9 +11,11 @@ function getDestinations(req, res) {
       `pincode`,
       `city`,
       `state`,
+      `visiting_hours`,
       `visiting_fee`,
       `description`,
       `picture`,
+      `image`,
     ],
   })
     .then((result) => {
