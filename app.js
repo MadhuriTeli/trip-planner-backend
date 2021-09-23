@@ -4,6 +4,7 @@ const cors = require("cors");
 const postsRoute = require("./routes/posts");
 const userRoute = require("./routes/user");
 const vendorRoute = require("./routes/vendor");
+const destinationRoute = require("./routes/destination");
 const commentsRoute = require("./routes/comments");
 const imageRoute = require("./routes/images");
 
@@ -15,6 +16,8 @@ app.use("/uploads", express.static("uploads"));
 app.use("/posts", postsRoute);
 app.use("/user", userRoute);
 app.use("/vendor", vendorRoute);
+app.use("/destinations", destinationRoute);
+
 app.use("/comments", commentsRoute);
 app.use("/images", imageRoute);
 
