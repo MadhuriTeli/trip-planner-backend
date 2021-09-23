@@ -1,20 +1,22 @@
 const Validator = require("fastest-validator");
 const models = require("../models");
 
-// Get API to get all destinations
-function getDestinations(req, res) {
-  models.Destinations.findAll({
+// Get API to get all Hotels
+function getHotels(req, res) {
+  models.Hotels.findAll({
     attributes: [
       "id",
       "title",
+      `contact_no`,
+      `website`,
       `address`,
       `pincode`,
       `city`,
       `state`,
-      `visiting_hours`,
-      `visiting_fee`,
+      `price`,
       `description`,
-      `picture`,
+      `hotel_type`,
+      `star`,
       `image`,
     ],
   })
@@ -29,15 +31,17 @@ function getDestinations(req, res) {
     });
 }
 
-function getDestinationById(req, res) {
+function getHotelsById(req, res) {
   const id = req.params.id;
-  models.Destinations.findByPk(id)
+
+  models.Hotels.findByPk(id)
+
     .then((result) => {
       if (result) {
         res.status(200).json(result);
       } else {
         res.status(404).json({
-          message: "Destinations not found!",
+          message: "Hotels not found!",
         });
       }
     })
@@ -49,6 +53,6 @@ function getDestinationById(req, res) {
 }
 
 module.exports = {
-  getDestinations: getDestinations,
-  getDestinationById: getDestinationById,
+  getHotels: getHotels,
+  getHotelsById: getHotelsById,
 };
