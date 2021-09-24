@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Users",
+        model: "User",
         key: "id",
       },
     },
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     Saveddestination.belongsTo(models.Destinations, {
       foreignKey: "destId",
     });
-    Saveddestination.belongsTo(models.Users, {
+    Saveddestination.belongsTo(models.User, {
       foreignKey: "userId",
     });
   };
