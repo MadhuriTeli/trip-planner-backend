@@ -1,6 +1,6 @@
 const Validator = require("fastest-validator");
 const models = require("../models");
-
+const _ = require("lodash");
 // Get API to get all destinations
 function getDestinations(req, res) {
   models.Destinations.findAll({
@@ -11,9 +11,11 @@ function getDestinations(req, res) {
       `pincode`,
       `city`,
       `state`,
+      `visiting_hours`,
       `visiting_fee`,
       `description`,
       `picture`,
+      `image`,
     ],
   })
     .then((result) => {
@@ -55,6 +57,7 @@ function save(req, res) {
       res.status(201).json({
         message: "Destinations saved successfully",
         savedDest: result,
+        status: 201,
       });
     })
     .catch((error) => {
@@ -103,13 +106,15 @@ function getDestinationsDetails(req, res) {
             "visiting_hours",
             "visiting_fee",
             "description",
-            "picture",
             "image",
           ],
         },
       ],
     })
     .then((result) => {
+      result = _.map(result, (a) => {
+        return a.Destination;
+      });
       res.status(200).json(result);
     })
     .catch((error) => {
