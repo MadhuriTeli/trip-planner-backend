@@ -1,5 +1,6 @@
 const Validator = require("fastest-validator");
 const models = require("../models");
+const _ = require("lodash");
 
 // Get API to get all Hotels
 function getHotels(req, res) {
@@ -52,7 +53,108 @@ function getHotelsById(req, res) {
     });
 }
 
+//Post API to add items to favourites
+function save(req, res) {
+  const savedHotel = {
+    userId: req.body.userId,
+    hotelId: req.body.hotelId,
+  };
+
+  const schema = {
+    userId: { type: "number", optional: false, max: "32" },
+    hotelId: { type: "number", optional: false, max: "32" },
+  };
+
+  const v = new Validator();
+  const validationResponse = v.validate(savedHotel, schema);
+
+  if (validationResponse !== true) {
+    return res.status(400).json({
+      message: "Validation failed",
+      errors: validationResponse,
+    });
+  }
+
+  models.savedhotels
+    .create(savedHotel)
+    .then((result) => {
+      res.status(201).json({
+        message: "Destinations saved successfully",
+        savedHotel: result,
+        status: 201,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error,
+      });
+    });
+}
+
+// API to get dest data
+function getHotelDetails(req, res) {
+  // const savedDest = {
+  //     userId: req.params.userId
+  // }
+
+  // const schema = {
+  //     userId: {type:"number", optional: false, max: "32"}
+  // }
+
+  // const v = new Validator();
+  // const validationResponse = v.validate(savedDest, schema);
+
+  // if(validationResponse !== true){
+  //     return res.status(400).json({
+  //         message: "Validation failed",
+  //         errors: validationResponse
+  //     });
+  // }
+  models.savedhotels
+    .findAll({
+      attributes: ["id", "userId", `hotelId`],
+      where: {
+        userId: req.params.userId,
+      },
+      include: [
+        {
+          model: models.Hotels,
+          attributes: [
+            "id",
+            "title",
+            `contact_no`,
+            `website`,
+            `address`,
+            `pincode`,
+            `city`,
+            `state`,
+            `price`,
+            `description`,
+            `hotel_type`,
+            `star`,
+            `image`,
+          ],
+        },
+      ],
+    })
+    .then((result) => {
+      result = _.map(result, (a) => {
+        return a.Hotel;
+      });
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Something went wrong!" + error,
+      });
+    });
+}
+
 module.exports = {
   getHotels: getHotels,
   getHotelsById: getHotelsById,
+  getHotelDetails: getHotelDetails,
+  save: save,
 };
