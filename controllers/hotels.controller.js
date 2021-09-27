@@ -79,7 +79,7 @@ function save(req, res) {
     .create(savedHotel)
     .then((result) => {
       res.status(201).json({
-        message: "Destinations saved successfully",
+        message: "Hotel saved successfully",
         savedHotel: result,
         status: 201,
       });
