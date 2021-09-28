@@ -4,6 +4,7 @@
     "password": "root",
     "database": "coderawesome_tut_api",
     "host": "127.0.0.1",
+    "port": "3307",
     "dialect": "mysql",
     "operatorsAliases": false
   },
@@ -12,6 +13,7 @@
     "password": "root",
     "database": "database_test",
     "host": "127.0.0.1",
+    "port": "3307",
     "dialect": "mysql",
     "operatorsAliases": false
   },
@@ -20,6 +22,7 @@
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
+    "port": "3307",
     "dialect": "mysql",
     "operatorsAliases": false
   }
