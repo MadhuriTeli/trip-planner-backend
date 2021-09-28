@@ -152,9 +152,40 @@ function getHotelDetails(req, res) {
     });
 }
 
+async function deleteHotel(req, res) {
+  const id = req.params.id;
+  const userId = req.params.userId;
+
+  // find the destination first
+  const hotel = await models.savedhotels.findOne({
+    where: { id: id, userId: userId },
+  });
+  console.log(hotel);
+  if (hotel) {
+    await models.savedhotels
+      .destroy({ where: { id: id, userId: userId } })
+      .then((result) => {
+        res.status(200).json({
+          message: "Hotels deleted successfully",
+        });
+      })
+      .catch((error) => {
+        res.status(200).json({
+          message: "Something went wrong",
+          error: error,
+        });
+      });
+  } else {
+    res.status(404).json({
+      message: "No destination found",
+    });
+  }
+}
+
 module.exports = {
   getHotels: getHotels,
   getHotelsById: getHotelsById,
   getHotelDetails: getHotelDetails,
   save: save,
+  deleteHotel: deleteHotel,
 };
