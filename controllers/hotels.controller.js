@@ -158,15 +158,16 @@ async function deleteHotel(req, res) {
 
   // find the destination first
   const hotel = await models.savedhotels.findOne({
-    where: { id: id, userId: userId },
+    where: { hotelId: id, userId: userId },
   });
   console.log(hotel);
   if (hotel) {
     await models.savedhotels
-      .destroy({ where: { id: id, userId: userId } })
+      .destroy({ where: { hotelId: id, userId: userId } })
       .then((result) => {
         res.status(200).json({
           message: "Hotels deleted successfully",
+          status: 200,
         });
       })
       .catch((error) => {
