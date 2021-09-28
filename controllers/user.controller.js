@@ -84,6 +84,7 @@ function login(req, res) {
             } else {
               res.status(401).json({
                 message: "Invalid credentials!",
+                status: 401,
               });
             }
           }
