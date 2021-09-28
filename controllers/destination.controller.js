@@ -1,6 +1,10 @@
 const Validator = require("fastest-validator");
 const models = require("../models");
+<<<<<<< HEAD
 
+=======
+const _ = require("lodash");
+>>>>>>> 98d4710ca29c68cd4eef11dc62a2ee103eaf30c8
 // Get API to get all destinations
 function getDestinations(req, res) {
   models.Destinations.findAll({
@@ -11,9 +15,11 @@ function getDestinations(req, res) {
       `pincode`,
       `city`,
       `state`,
+      `visiting_hours`,
       `visiting_fee`,
       `description`,
       `picture`,
+      `image`,
     ],
   })
     .then((result) => {
@@ -55,6 +61,7 @@ function save(req, res) {
       res.status(201).json({
         message: "Destinations saved successfully",
         savedDest: result,
+        status: 201,
       });
     })
     .catch((error) => {
@@ -103,13 +110,15 @@ function getDestinationsDetails(req, res) {
             "visiting_hours",
             "visiting_fee",
             "description",
-            "picture",
             "image",
           ],
         },
       ],
     })
     .then((result) => {
+      result = _.map(result, (a) => {
+        return a.Destination;
+      });
       res.status(200).json(result);
     })
     .catch((error) => {
@@ -139,9 +148,41 @@ function getDestinationById(req, res) {
     });
 }
 
+async function deleteDestination(req, res) {
+  const id = req.params.id;
+  const userId = req.params.userId;
+
+  // find the destination first
+  const dest = await models.saveddestinations.findOne({
+    where: { destId: id, userId: userId },
+  });
+  console.log(dest);
+  if (dest) {
+    await models.saveddestinations
+      .destroy({ where: { destId: id, userId: userId } })
+      .then((result) => {
+        res.status(200).json({
+          message: "Destination deleted successfully",
+          status: 200,
+        });
+      })
+      .catch((error) => {
+        res.status(200).json({
+          message: "Something went wrong",
+          error: error,
+        });
+      });
+  } else {
+    res.status(404).json({
+      message: "No destination found",
+    });
+  }
+}
+
 module.exports = {
   getDestinations: getDestinations,
   save: save,
   getDestinationsDetails: getDestinationsDetails,
   getDestinationById: getDestinationById,
+  deleteDestination: deleteDestination,
 };
