@@ -22,6 +22,20 @@ module.exports = (sequelize, DataTypes) => {
         key: "id",
       },
     },
+    totalAmount: {
+      type: DataTypes.DECIMAL,
+    },
+
+    status: {
+      type: DataTypes.STRING,
+    },
+
+    description: {
+      type: DataTypes.STRING,
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+    },
   });
   Order.associate = function (models) {
     // associations can be defined here
