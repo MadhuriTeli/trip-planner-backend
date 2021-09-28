@@ -1,10 +1,6 @@
 const Validator = require("fastest-validator");
 const models = require("../models");
-<<<<<<< HEAD
-
-=======
 const _ = require("lodash");
->>>>>>> 98d4710ca29c68cd4eef11dc62a2ee103eaf30c8
 // Get API to get all destinations
 function getDestinations(req, res) {
   models.Destinations.findAll({
