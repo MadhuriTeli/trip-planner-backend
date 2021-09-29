@@ -11,4 +11,6 @@ router.get("/get-all/:userId", packageController.getPackagesDetails);
 router.get("/cart/:userId", packageController.getCartDetails);
 
 router.delete("/delete/:id/:userId", packageController.deletePackage);
+
+router.delete("/:id/:vendorId", packageController.destroy);
 module.exports = router;

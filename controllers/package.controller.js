@@ -328,6 +328,25 @@ async function deletePackage(req, res) {
   }
 }
 
+function destroy(req, res) {
+  const id = req.params.id;
+  const vendorId = req.params.vendorId;
+
+  models.Packages.destroy({ where: { id: id, vendor_id: vendorId } })
+    .then((result) => {
+      res.status(200).json({
+        message: "Package deleted successfully",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(200).json({
+        message: "Something went wrong",
+        error: error,
+      });
+    });
+}
+
 module.exports = {
   getPackages: getPackages,
   save: save,
@@ -336,4 +355,5 @@ module.exports = {
   getPackageById: getPackageById,
   getCartDetails: getCartDetails,
   deletePackage: deletePackage,
+  destroy: destroy,
 };
